@@ -10,7 +10,7 @@ global Vx Vy x y Fx Fy AtomSpacing
 global Phi nAtoms time Mass0 Mass1 Mass2 Pty0in Pty1in Pty2in
 global LJEpsilon LJSigma Phi0 AtomType
 global MinX MaxX MinY MaxY PhiTot KETot
-global nAtoms0 nAtoms1 nAtoms2 T T0 T1 MarkerSize
+global nAtoms0 nAtoms1 nAtoms2 T T0 T1 T2 MarkerSize
 global doPlotImage PlotCount map im PlotSize ScaleV ScaleF
 
 C.q_0 = 1.60217653e-19;             % electron charge
@@ -93,12 +93,18 @@ PhiTot(c) = sum(Phi) / 2;
 
 V2_0 = (Vx(Pty0in).*Vx(Pty0in) + Vy(Pty0in).*Vy(Pty0in));
 
-V2_2 = (Vx(Pty2in).*Vx(Pty2in) + Vy(Pty2in).*Vy(Pty2in));
 if nAtoms1
     V2_1 = (Vx(Pty1in).*Vx(Pty1in) + Vy(Pty1in).*Vy(Pty1in));
 else
     V2_1 = 0;
 end
+
+if nAtoms2
+    V2_2 = (Vx(Pty2in).*Vx(Pty2in) + Vy(Pty2in).*Vy(Pty2in));
+else
+    V2_2 = 0;
+end
+
 
 KE0 = mean(V2_0) * Mass0 * 0.5;
 KE1 = mean(V2_1) * Mass1 * 0.5;
@@ -108,6 +114,7 @@ KETot(c) = ((KE0 * nAtoms0) + (KE1 * nAtoms1) + (KE2 * nAtoms2));
 T(c) = KETot(c) / nAtoms / C.kb;
 T0(c) = KE0 / C.kb;
 T1(c) = KE1 / C.kb;
+T2(c) = KE2 / C.kb;
 
 if PlotPosOnly
     PlotOnlyP(c,Limits);
@@ -180,14 +187,17 @@ while t < TStop
     t  = t + dt;
     time(c) = t;
 
-
     PhiTot(c) = sum(Phi)/2;
     V2_0 = (Vx(Pty0in).*Vx(Pty0in)+Vy(Pty0in).*Vy(Pty0in));
-    V2_2 = (Vx(Pty2in).*Vx(Pty2in) + Vy(Pty2in).*Vy(Pty2in));
     if nAtoms1
         V2_1 = (Vx(Pty1in).*Vx(Pty1in)+Vy(Pty1in).*Vy(Pty1in));
     else
         V2_1 = 0;
+    end
+    if nAtoms2
+        V2_2 = (Vx(Pty2in).*Vx(Pty2in) + Vy(Pty2in).*Vy(Pty2in));
+    else
+        V2_2 = 0;
     end
 
     KE0 = mean(V2_0) * Mass0 * 0.5;

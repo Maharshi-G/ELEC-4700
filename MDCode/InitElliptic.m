@@ -18,8 +18,8 @@ AddEllipticalArray(6, 0, 0, 0, 0, 0, T, 0);
 
 %(num, x0, y0, PartAng, Type, Ep, Seper)
 Ep = 2;
-AddParticleStream(1, 0.1, 10, -pi / 2, 1, Ep * C.q_0, 5); %Top->down
-AddParticleStream(2, 0.1, 10, -pi / 2, 2, Ep * C.q_0, 5); %Left->Right
+AddParticleStream(1, 0.1, 10, -pi / 2, 2, Ep * C.q_0, 5); %Top->down
+AddParticleStream(1, 2, 10, -pi / 2, 2, Ep * C.q_0, 5); %Left->Right
 
 
 
